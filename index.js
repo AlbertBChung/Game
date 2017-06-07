@@ -13,6 +13,14 @@ app.use(function(req, res, next) {
   next();
 });
 
+var db = MongoClient.connect('mongodb://heroku_3q7stlzb:trivialice752@ds139869.mlab.com:39869/heroku_3q7stlzb', function(err, database) {
+  if (err) {
+    console.log(err);
+  } else {
+    db = database;
+  } 
+});
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
