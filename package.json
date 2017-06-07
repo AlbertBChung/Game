@@ -1,6 +1,6 @@
 {
-  "name": "The_Den",
-  "version": "1.0",
+  "name": "node-js-getting-started",
+  "version": "0.2.5",
   "description": "LHS RULES XD",
   "engines": {
     "node": "5.9.1"
