@@ -13,7 +13,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-var db = MongoClient.connect('mongodb://heroku_3q7stlzb:trivialice752@ds139869.mlab.com:39869/heroku_3q7stlzb', function(err, database) {
+var db = MongoClient.connect('mongodb://lion:trivialice752@ds139869.mlab.com:39869/heroku_3q7stlzb', function(err, database) {
   if (err) {
     console.log(err);
   } else {
@@ -31,6 +31,25 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
   response.render('pages/index');
+});
+
+app.post('/test', function(request, response) {
+    var username = request.body.username;
+    var time = new Date();
+    var toInsert = {
+      "username": username,
+      "time" : time
+    }
+    db.collection('users', function(error, coll) {
+      coll.insert(toInsert, function(error, saved) {
+         if (error) {
+            response.send(500);
+          }
+          else {
+              response.send();
+          }
+      })
+    })
 });
 
 app.listen(app.get('port'), function() {
