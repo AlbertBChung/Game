@@ -1,0 +1,31 @@
+{
+  "name": "The_Den",
+  "version": "1.0",
+  "description": "LHS RULES XD",
+  "engines": {
+    "node": "5.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ejs": "2.4.1",
+    "express": "4.13.3",
+    "xmlhttprequest": "latest",
+    "http": "latest",
+    "body-parser": "latest",
+    "jquery": "latest",
+    "mongodb":"latest"  
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlbertBChung/The_Den"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}
