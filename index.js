@@ -13,7 +13,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-var db = MongoClient.connect('mongodb://lion:trivialice752@ds139869.mlab.com:39869/heroku_3q7stlzb', function(err, database) {
+var db = MongoClient.connect( process.env.MONGODB_URI, function(err, database) {
   if (err) {
     console.log(err);
   } else {
