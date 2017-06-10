@@ -10,14 +10,15 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "body-parser": "latest",
+    "dotenv": "latest",
     "ejs": "2.4.1",
     "express": "4.13.3",
-    "xmlhttprequest": "latest",
     "http": "latest",
-    "body-parser": "latest",
     "jquery": "latest",
-    "mongodb":"latest",
-    "dotenv": "latest"  
+    "mongodb": "latest",
+    "mongoose": "^4.10.5",
+    "xmlhttprequest": "latest"
   },
   "repository": {
     "type": "git",
