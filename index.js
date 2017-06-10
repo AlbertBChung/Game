@@ -1,3 +1,4 @@
+require('dotenv').config()
 var express = require('express');
 var jquery = require('jquery');
 var app = express();
@@ -13,6 +14,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+console.log(process.env.MONGODB_URI)
 var db = MongoClient.connect( process.env.MONGODB_URI, function(err, database) {
   if (err) {
     console.log(err);
@@ -51,6 +53,37 @@ app.post('/test', function(request, response) {
       })
     })
 });
+
+app.post('/api/user', function(req, res){
+  var toInsert = {
+    "firstName":  req.body.firstName,
+    "lastName": req.body.lastName,
+    "email": req.body.email
+  }
+  db.collection('users', function(err, coll){
+    coll.insert(toInsert, function(err, saved){
+      if (err) {
+        res.send(500);
+      }
+      else {
+        res.send();
+      }
+    })
+  })
+});
+
+app.get('/api/user/:firstName', function(req, res){
+  db.collection('users', function(err,coll){
+    coll.findOne({"firstName": req.params.firstName}, function(err, user){
+      if (err) {
+        res.send(500);
+      }
+      else {
+        res.send(user);
+      }
+    })
+  })
+})
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

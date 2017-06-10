@@ -16,7 +16,8 @@
     "http": "latest",
     "body-parser": "latest",
     "jquery": "latest",
-    "mongodb":"latest"  
+    "mongodb":"latest",
+    "dotenv": "latest"  
   },
   "repository": {
     "type": "git",
