@@ -18,7 +18,8 @@
     "jquery": "latest",
     "mongodb": "latest",
     "mongoose": "^4.10.5",
-    "xmlhttprequest": "latest"
+    "xmlhttprequest": "latest",
+    "cors": "latest"
   },
   "repository": {
     "type": "git",
