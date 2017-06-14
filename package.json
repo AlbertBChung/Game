@@ -11,15 +11,18 @@
   },
   "dependencies": {
     "body-parser": "latest",
+    "cors": "latest",
     "dotenv": "latest",
     "ejs": "2.4.1",
     "express": "4.13.3",
+    "express-session": "latest",
     "http": "latest",
     "jquery": "latest",
     "mongodb": "latest",
     "mongoose": "^4.10.5",
-    "xmlhttprequest": "latest",
-    "cors": "latest"
+    "passport": "latest",
+    "passport-google-oauth20": "^1.0.0",
+    "xmlhttprequest": "latest"
   },
   "repository": {
     "type": "git",

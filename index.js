@@ -3,7 +3,8 @@ require('dotenv').config() //module that allows us to store secret info in .env 
 var express = require('express') //middleware that our whole app depends on.
 var mongoose = require('mongoose') //module used to communicate with Mongo Database.
 var cors = require('cors') //using cors() in line 31 allows other domains to access our api (server).
-
+var session = require('express-session');//module to handle google login sessions.
+var passport = require('passport'); //module to handle authentication.
 var app = express() //initializes our app as an express app.
 
 var bodyParser = require('body-parser') //bodyParser allows us to access the body of a json that we send from a client to this server.
@@ -29,6 +30,22 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(cors()) 
+
+
+// Configure the session and session storage.
+const sessionConfig = {
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.OAUTH2_CLIENT_SECRET,
+  signed: true
+};
+
+app.use(session(sessionConfig));
+
+// OAuth2
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(require('./oauth2').router);
 
 // http://localhost:5000/ sends us to index.html in views/pages/
 // By going to the URL, we make a GET request. (app.get)
