@@ -29,6 +29,8 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+
+
 app.use(cors()) 
 
 
@@ -45,7 +47,7 @@ app.use(session(sessionConfig));
 // OAuth2
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require('./oauth2').router);
+app.use(require('./auth/oauth2').router);
 
 // http://localhost:5000/ sends us to index.html in views/pages/
 // By going to the URL, we make a GET request. (app.get)
