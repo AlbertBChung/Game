@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
 app.use(passport.initialize());
 
 // Connect to the MongoDB
-mongoose.connect(process.env.MONGODB_URI);
+//mongoose.connect(process.env.MONGODB_URI);
 app.use(cors())
 
 //set our port to be PORT in our .env file or 5000.
