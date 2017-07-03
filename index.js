@@ -3,7 +3,7 @@ require('dotenv').config() //module that allows us to store secret info in .env 
 var express = require('express') //middleware that our whole app depends on.
 var mongoose = require('mongoose') //module used to communicate with Mongo Database.
 var cors = require('cors') //using cors() in line 31 allows other domains to access our api (server).
-
+var save = require('./routes/saveStates') // handles saveState HTTP requests
 var passport = require('passport'); //module to handle authentication.
 
 
@@ -53,6 +53,14 @@ router.use('/users', require('./routes/users.js')) //  (http://..../users) path 
 app.use('/api', router) // our app uses this router for the localhost:5000/api/ path.
                         // this means our (http://..../users) URL is accessed by localhost:5000/api/users.
 
+// endpoint handler for /save
+router.route('/save')
+  .post(save.postSaveStates)
+  .get(save.getSaveState);
+
+// endpoint handler for /save/:username
+router.route('/save/:username')
+  .get(save.putSaveState);
 
 app.listen(app.get('port'), function() { //listen starts our server at port 5000.
   console.log('Node app is running on port', app.get('port')); //prints message on terminal.

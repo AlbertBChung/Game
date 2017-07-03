@@ -4,7 +4,7 @@ var saveStateSchema = new mongoose.Schema({
     username: String,
     id: Number,
     inventory: [{ item: String, itemCount: Number }],
-    npc: [{ npcName: String, interactionCount: Number }]
+    npcInteractions: [{ npcName: String, interactionCount: Number }]
 })
 
 module.exports = mongoose.model('SaveState', saveStateSchema );

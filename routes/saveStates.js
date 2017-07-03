@@ -58,8 +58,3 @@ exports.putSaveState = function(req, res) {
         });
     });
 };
-
-// handles DELETE request
-exports.deleteSaveState = function(req, res) {
-    
-}
