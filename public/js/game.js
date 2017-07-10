@@ -4,12 +4,12 @@ var player;
 var cursors;
 var map;
 var layer;
-var TILE_SIZE = 16;
+var TILE_SIZE = 32;
 
 function preload () {
     game.load.image('hero', '/img/mc.png');
 
-
+    game.load.spritesheet('character_animation', '/img/movement_tileset.png', 32, 32, 40);
     game.load.tilemap('map', '/img/tileMap.csv', null, Phaser.Tilemap.CSV);
     game.load.image('tiles', '/img/tileset.png');
 
@@ -33,7 +33,7 @@ function create () {
 
 
 
-	player = new Character(game, 'hero', TILE_SIZE);
+	player = new Character(game, 'character_animation', TILE_SIZE);
 
 	game.physics.arcade.enable(player);
 	player.body.collideWorldBounds = true;

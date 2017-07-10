@@ -3,8 +3,18 @@
 *
 */
 Character = function(game, name, size){
-	console.log(TILE_SIZE)
 	Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, name); //call sprite constructor
+	this.animations.add('idle_down', [0,1,2,3,4], 2, true);
+	this.animations.add('idle_up', [10,11,12,13,14], 2, true);
+	this.animations.add('idle_left', [20,21,22,23,24], 2, true);
+	this.animations.add('idle_right', [30,31,32,33,34], 2, true);
+	this.animations.add('walk_down', [5,6,7,8,9], 2, true);
+	this.animations.add('walk_up', [15,16,17,18,19], 2, true);
+	this.animations.add('walk_left', [25,26,27,28,29], 2, true);
+	this.animations.add('walk_right', [35,36,37,38,39], 2, true);
+
+	this.animations.play('idle_down')
+
 	game.add.existing(this);
 	this.width = size;
 	this.height = size;
@@ -20,43 +30,66 @@ Character = function(game, name, size){
 	this.ok_to_move = false; //boolean that becomes true when key press passes the turn time threshold.
 	this.keyboard_enabled = true; //boolean that forbids movement keypress.
 
-	this.up = function(){
+	this.up = function(){	
 		this.ok_to_move = false;
 		this.moveTime = 0;
 	};
 
 	this.updatePosition = function(currTime){
 
+	  	console.log(this.animations.currentAnim.name)
 		if( this.movingup ){
-  		this.y -= 1; this.dist++;
-  		if(this.dist == TILE_SIZE){
+			this.animations.play('walk_up');
+  		this.y -= 2; this.dist++;
+  		if(this.dist == TILE_SIZE/2){
   			this.dist = 0;
   			this.movingup = false;
   			this.keyboard_enabled = true;
   		}
   	}
-  	if( this.movingdown ){
-  		this.y += 1; this.dist++;
-  		if(this.dist == TILE_SIZE){
+  	else if( this.movingdown ){
+			this.animations.play('walk_down');
+  		this.y += 2; this.dist++;
+  		if(this.dist == TILE_SIZE/2){
   			this.dist = 0;
   			this.movingdown = false;
   			this.keyboard_enabled = true;
   		}
   	}
-  	if( this.movingleft ){
-  		this.x -= 1; this.dist++;
-  		if(this.dist == TILE_SIZE){
+  	else if( this.movingleft ){
+			this.animations.play('walk_left');
+  		this.x -= 2; this.dist++;
+  		if(this.dist == TILE_SIZE/2){
   			this.dist = 0;
   			this.movingleft = false;
   			this.keyboard_enabled = true;
   		}
   	}
-	  if( this.movingright ){
-	  	this.x += 1; this.dist++;
-	  	if(this.dist == TILE_SIZE){
+	  else if( this.movingright ){
+			this.animations.play('walk_right');
+	  	this.x += 2; this.dist++;
+	  	if(this.dist == TILE_SIZE/2){
 	  		this.dist = 0;
 	  		this.movingright = false;
 	  		this.keyboard_enabled = true;
+	  	}
+	  }
+	  else{
+
+	  	switch(this.animations.currentAnim.name){
+	  		case 'walk_down':
+			  	this.animations.play('idle_down');
+			  	break;
+	  		case 'walk_right':
+			  	this.animations.play('idle_right');
+			  	break;
+	  		case 'walk_left':
+			  	this.animations.play('idle_left');
+			  	break;
+	  		case 'walk_up':
+			  	this.animations.play('idle_up');
+			  	break;
+
 	  	}
 	  }
 
