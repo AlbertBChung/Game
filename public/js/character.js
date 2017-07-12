@@ -3,7 +3,7 @@
 *
 */
 Character = function(game, name, size){
-	Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, name); //call sprite constructor
+	Phaser.Sprite.call(this, game, 0, 0, name); //call sprite constructor
 	this.animations.add('idle_down', [0,1,2,3,4], 2, true);
 	this.animations.add('idle_up', [10,11,12,13,14], 2, true);
 	this.animations.add('idle_left', [20,21,22,23,24], 2, true);
@@ -95,8 +95,9 @@ Character = function(game, name, size){
 
 
 	  if (cursors.up.isDown && this.keyboard_enabled)
-	  {				
+	  {			
 	  	if(this.moveTime == 0){
+		  	this.animations.play('idle_up');	
 		  	this.moveTime = currTime;
 	  	}
 	  	else if(currTime - this.moveTime > 100){
@@ -114,7 +115,9 @@ Character = function(game, name, size){
 	  }
 	  else if (cursors.down.isDown && this.keyboard_enabled)
 	  {
+	  	
 	  	if(this.moveTime == 0){
+	  		this.animations.play('idle_down');	
 		  	this.moveTime = currTime;
 	  	}
 	  	else if(currTime - this.moveTime > 100){
@@ -133,8 +136,9 @@ Character = function(game, name, size){
 	  }
 
 	  if (cursors.left.isDown && this.keyboard_enabled)
-	  {	
+	  {		
 	  	if(this.moveTime == 0){
+		  	this.animations.play('idle_left');
 		  	this.moveTime = currTime;
 	  	}
 	  	else if(currTime - this.moveTime > 100){
@@ -153,6 +157,7 @@ Character = function(game, name, size){
 	  else if (cursors.right.isDown && this.keyboard_enabled)
 	  {
 	  	if(this.moveTime == 0){
+		  	this.animations.play('idle_right');	
 		  	this.moveTime = currTime;
 	  	}
 	  	else if(currTime - this.moveTime > 100){

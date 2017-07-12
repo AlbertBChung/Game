@@ -10,8 +10,8 @@ function preload () {
     game.load.image('hero', '/img/mc.png');
 
     game.load.spritesheet('character_animation', '/img/movement_tileset.png', 32, 32, 40);
-    game.load.tilemap('map', '/img/tileMap.csv', null, Phaser.Tilemap.CSV);
-    game.load.image('tiles', '/img/tileset.png');
+    game.load.tilemap('map', '/img/map_tilemap.csv', null, Phaser.Tilemap.CSV);
+    game.load.image('tiles', '/img/map_tiles.png');
 
 
 }
@@ -22,7 +22,7 @@ function create () {
 	game.stage.backgroundColor = "#4488AA";
   map = game.add.tilemap('map', TILE_SIZE, TILE_SIZE);
   map.addTilesetImage('tiles');
-  map.setCollisionBetween(0, 7, true, layer);
+  map.setCollisionBetween(3, 4, true, layer);
 
   layer = map.createLayer(0);
   layer.resizeWorld();
