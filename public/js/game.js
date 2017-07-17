@@ -4,15 +4,21 @@ var player;
 var cursors;
 var map;
 var layer;
+var collisionMatrix; // n by m matrix where (n,m) == 1 if collides.
 var TILE_SIZE = 32;
 
 function preload () {
     game.load.image('hero', '/img/mc.png');
 
-    game.load.spritesheet('character_animation', '/img/movement_tileset.png', 32, 32, 40);
-    game.load.tilemap('map', '/img/map_tilemap.csv', null, Phaser.Tilemap.CSV);
+    game.load.spritesheet('character_animation', '/img/movement_tileset.png', 32, 32);
+    game.load.tilemap('0_Town_Market', '/img/0_Town_Market.csv', null, Phaser.Tilemap.CSV);
     game.load.image('tiles', '/img/map_tiles.png');
+    game.load.image('0_Market_Stand_Top', '/img/sprites/0_Market_Stand_Top.png');
+    game.load.image('0_Market_Stand_Bottom', '/img/sprites/0_Market_Stand_Bottom.png');
 
+    game.load.image('1_Market_Stand', '/img/sprites/1_Market_Stand.png');
+    game.load.image('2_Market_Stand', '/img/sprites/2_Market_Stand.png');
+    game.load.image('3_Market_Stand', '/img/sprites/3_Market_Stand.png');
 
 }
 
@@ -20,24 +26,32 @@ function preload () {
 
 function create () {
 	game.stage.backgroundColor = "#4488AA";
-  map = game.add.tilemap('map', TILE_SIZE, TILE_SIZE);
+  map = game.add.tilemap('0_Town_Market', TILE_SIZE, TILE_SIZE);
+
   map.addTilesetImage('tiles');
-  map.setCollisionBetween(3, 4, true, layer);
 
   layer = map.createLayer(0);
+
+  map.setCollisionBetween(3, 6, true, layer); 
+  map.setCollisionBetween(13, 16, true, layer);
+
   layer.resizeWorld();
+
+  collisionMatrix = initCollisionMatrix(layer.layer.width, layer.layer.height);
+
 
 
 	//player physics properties
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
+	addSprite(game, 64, 64, '0_Market_Stand_Top', true, collisionMatrix);
+	addSprite(game, 64, 128, '0_Market_Stand_Bottom', false)
 
 
-	player = new Character(game, 'character_animation', TILE_SIZE);
+	player = new Character(game, 'character_animation', TILE_SIZE, 0, 0, collisionMatrix);
 
-	game.physics.arcade.enable(player);
+	game.physics.arcade.enable([player]);
 	player.body.collideWorldBounds = true;
-
 
 
 
@@ -55,7 +69,7 @@ function update(){
 	var currTime = new Date().getTime();
 	game.physics.arcade.collide(player, layer);
 
-  player.updatePosition(currTime);
+  player.updatePosition(currTime, collisionMatrix);
 
 
 }
