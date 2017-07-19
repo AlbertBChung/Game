@@ -13,12 +13,11 @@ function preload () {
     game.load.spritesheet('character_animation', '/img/movement_tileset.png', 32, 32);
     game.load.tilemap('0_Town_Market', '/img/0_Town_Market.csv', null, Phaser.Tilemap.CSV);
     game.load.image('tiles', '/img/map_tiles.png');
-    game.load.image('0_Market_Stand_Top', '/img/sprites/0_Market_Stand_Top.png');
-    game.load.image('0_Market_Stand_Bottom', '/img/sprites/0_Market_Stand_Bottom.png');
-
+    game.load.image('0_Market_Stand', '/img/sprites/0_Market_Stand.png');
     game.load.image('1_Market_Stand', '/img/sprites/1_Market_Stand.png');
     game.load.image('2_Market_Stand', '/img/sprites/2_Market_Stand.png');
     game.load.image('3_Market_Stand', '/img/sprites/3_Market_Stand.png');
+    game.load.image('4_Fountain', '/img/sprites/4_Fountain.png');
 
 }
 
@@ -44,8 +43,8 @@ function create () {
 	//player physics properties
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	addSprite(game, 64, 64, '0_Market_Stand_Top', true, collisionMatrix);
-	addSprite(game, 64, 128, '0_Market_Stand_Bottom', false)
+	addSprite(game, 64, 64, '0_Market_Stand', true, collisionMatrix);
+	addSprite(game, 128, 128, '4_Fountain', true, collisionMatrix);
 
 
 	player = new Character(game, 'character_animation', TILE_SIZE, 0, 0, collisionMatrix);

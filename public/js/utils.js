@@ -42,11 +42,15 @@ function initCollisionMatrix(width, height){
 
   return collisionMatrix;
 }
+
+/**
+* Only for non character sprites
+*/
 function addSprite(game, x, y, imgKey, mustCollide, collisionMatrix){
 	sprite = game.add.sprite(x, y, imgKey);
 	if(mustCollide){
 		for( var i = x/TILE_SIZE; i<sprite.width/TILE_SIZE+x/TILE_SIZE; i++){
-			for( var j = y/TILE_SIZE; j<sprite.height/TILE_SIZE+y/TILE_SIZE; j++){
+			for( var j = y/TILE_SIZE; j<sprite.height/TILE_SIZE+y/TILE_SIZE-1; j++){
 				collisionMatrix[i][j] = 1;
 			}
 		}
