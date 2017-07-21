@@ -25,28 +25,12 @@ router.post('/', function(req, res) {
 
 });
 
-//handles a GET request to url (.../api/users/:firstName)
-//returns a single user whos first name is written in URL.
-//e.g.: localhost:5000/api/users/Albert
-router.get('/:username', authController.isAuthenticated, function(req, res){
-	User.findOne( {'username': req.params.username},function(err, user){
-	  if (err) {
-	    res.send(err);
-	  }
-	  else {
-	    res.json(user);
-	  }
-	})
-})
+router.post('/a', authController.isAuthenticated, function(req, res) {
 
-router.get('/', authController.isAuthenticated, function(req, res){
-  User.find({ username: req.user.username }, function(err, users) {
-    if (err)
-      return res.send(err);
+	   res.json({ message: 'auth' });
 
-    res.json(users);
-  });
-})
+
+});
 
 
 module.exports = router
