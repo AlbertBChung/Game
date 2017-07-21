@@ -31,8 +31,8 @@ function create () {
 
   layer = map.createLayer(0);
 
-  map.setCollisionBetween(3, 6, true, layer); 
-  map.setCollisionBetween(13, 16, true, layer);
+  //map.setCollisionBetween(3, 6, true, layer); 
+  //map.setCollisionBetween(13, 16, true, layer);
 
   layer.resizeWorld();
 
@@ -43,8 +43,14 @@ function create () {
 	//player physics properties
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	addSprite(game, 64, 64, '0_Market_Stand', true, collisionMatrix);
-	addSprite(game, 128, 128, '4_Fountain', true, collisionMatrix);
+	addSprite(game, 320, 224, '0_Market_Stand', true, collisionMatrix);
+  addSprite(game, 480, 224, '0_Market_Stand', true, collisionMatrix);
+  addSprite(game, 640, 224, '0_Market_Stand', true, collisionMatrix);
+
+  addSprite(game, 192, 416, '2_Market_Stand', true, collisionMatrix);
+  addSprite(game, 192, 576, '2_Market_Stand', true, collisionMatrix);
+  addSprite(game, 192, 704, '2_Market_Stand', true, collisionMatrix);
+	addSprite(game, 416, 480, '4_Fountain', true, collisionMatrix);
 
 
 	player = new Character(game, 'character_animation', TILE_SIZE, 0, 0, collisionMatrix);
