@@ -6,7 +6,10 @@ var map;
 var layer;
 var collisionMatrix; // n by m matrix where (n,m) == 1 if collides.
 var TILE_SIZE = 32;
-
+var reg = {}; //needed to create sound for typewriter
+var spaceKey; // spacebar key in order to skip the typewriter function
+var text; // the variable to use to reference the typewriter functions
+var TextBox; // text box
 function preload () {
     game.load.image('hero', '/img/mc.png');
 
@@ -15,14 +18,22 @@ function preload () {
     game.load.image('tiles', '/img/map_tiles.png');
     game.load.image('0_Market_Stand_Top', '/img/sprites/0_Market_Stand_Top.png');
     game.load.image('0_Market_Stand_Bottom', '/img/sprites/0_Market_Stand_Bottom.png');
-
+    game.load.image('TextBox', '/img/TextBox.png'); //text box
     game.load.image('1_Market_Stand', '/img/sprites/1_Market_Stand.png');
     game.load.image('2_Market_Stand', '/img/sprites/2_Market_Stand.png');
     game.load.image('3_Market_Stand', '/img/sprites/3_Market_Stand.png');
 
+
+  game.load.json('TextRendering', '/js/TextRendering.json');
+  game.load.script('Typewriter', '/js/typewriter.js')
+  game.load.audio('typing', ['/sounds/Typing.mp3']);
+  game.load.bitmapFont('lunchds','/fonts/lunchds/lunchds.png', 'fonts/lunchds/lunchds.fnt');
+
 }
 
-
+//text variables
+var timeCheck;
+var skipped = 0;
 
 function create () {
 	game.stage.backgroundColor = "#4488AA";
@@ -59,18 +70,69 @@ function create () {
 	cursors = game.input.keyboard.createCursorKeys();
   game.input.keyboard.addCallbacks(this, undefined, up, undefined);
 	game.camera.follow(player);
+  //spacebar registered
+  this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR); 
 
+  // typing sound created
+  reg.track = game.add.audio('typing');
+  //loads script
+  var phaserJSON = game.cache.getJSON('TextRendering');
+  //creates typewriter
+  TextBox = game.add.sprite(150,430, 'TextBox');
+  TextBox.fixedToCamera = true;
+
+  text = new Typewriter();
+  text.init(game, {
+  x:200, 
+  y:500,
+  fontFamily: "lunchds",
+  fontSize: 20,
+  maxWidth: 500,
+  sound: reg.track,
+  text: "Welcome to the game " + phaserJSON.Script.name + "."
+  });
+
+  skippable = text.start();
+  timeCheck = game.time.now;
 
 
 }
+// text variables
+var dialogue1 = "What adventures should we have today?"
 
 
 function update(){
 	var currTime = new Date().getTime();
 	game.physics.arcade.collide(player, layer);
 
+  
+
   player.updatePosition(currTime, collisionMatrix);
 
+if (this.spaceKey.isDown && skipped == 0) //loop to skip the text
+    {
+      text.skip();
+      timeCheck = game.time.now;
+      skipped = 1;
+       
+    }
+if (this.spaceKey.isDown && skipped == 1 && game.time.now - timeCheck > 200) // loop to go to next dialogue page
+    {
+      text.update(dialogue1);//updates the dialogue to move on to the next part.
+      text.destroy();
+      text.start();
+      
+      timeCheck = game.time.now;
+      skipped = 2;
+    }
+if (this.spaceKey.isDown && skipped == 2 && game.time.now - timeCheck > 200) // command to destroy and erase the text
+    {
+      text.destroy();
+      TextBox.destroy();
+      
+      timeCheck = game.time.now;
+      skipped = 3;
+    }
 
 }
 
@@ -83,7 +145,6 @@ function render(){
 function up(e){
 	player.up();
 }
-
 
 
 
