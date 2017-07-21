@@ -31,7 +31,9 @@ function preload () {
 
 }
 
-
+//text variables
+var timeCheck;
+var skipped = 0;
 
 function create () {
 	game.stage.backgroundColor = "#4488AA";
@@ -90,23 +92,48 @@ function create () {
   text: "Welcome to the game " + phaserJSON.Script.name + "."
   });
 
-  text.start();
-  
+  skippable = text.start();
+  timeCheck = game.time.now;
+
 
 }
- 
+// text variables
+var dialogue1 = "What adventures should we have today?"
+
 
 function update(){
 	var currTime = new Date().getTime();
 	game.physics.arcade.collide(player, layer);
+
   
 
   player.updatePosition(currTime, collisionMatrix);
 
-if (this.spaceKey.isDown)
+if (this.spaceKey.isDown && skipped == 0) //loop to skip the text
     {
       text.skip();
+      timeCheck = game.time.now;
+      skipped = 1;
+       
     }
+if (this.spaceKey.isDown && skipped == 1 && game.time.now - timeCheck > 200) // loop to go to next dialogue page
+    {
+      text.update(dialogue1);//updates the dialogue to move on to the next part.
+      text.destroy();
+      text.start();
+      
+      timeCheck = game.time.now;
+      skipped = 2;
+    }
+if (this.spaceKey.isDown && skipped == 2 && game.time.now - timeCheck > 200) // command to destroy and erase the text
+    {
+      text.destroy();
+      TextBox.destroy();
+      
+      timeCheck = game.time.now;
+      skipped = 3;
+    }
+
 }
 
 function render(){

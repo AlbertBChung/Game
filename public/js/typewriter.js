@@ -25,14 +25,20 @@ function Typewriter() {
     function start() {
         enableTypingSpecificMessage(_that.text, _that.x, _that.y);
     }
+
     //Skip function to jump to the end of the of the text skipping the typewriter effect
     function skip(){
         stop();
         _that.typedText.destroy();
-        game.add.bitmapText( _that.x, _that.y, _that.fontFamily, _that.text, _that.fontSize);
+        _that.typedText = game.add.bitmapText( _that.x, _that.y, _that.fontFamily, _that.text, _that.fontSize);
         
-
     }
+
+    function update(newText){
+        _that.text = newText;
+        
+    }
+
     function stop() {
 
         if (_that.timer !== undefined) {
@@ -45,6 +51,8 @@ function Typewriter() {
         //if(_that.typedText !== undefined){ // This can cause problems if you repeatedly type to a text object. ~Tilde
            //_that.typedText.destroy();
        //}
+
+       return 1;
     }
 
     function enableTypingSpecificMessage(text, x, y) {
@@ -120,6 +128,9 @@ function Typewriter() {
         },
         skip: function() {
             skip();
+        },
+        update: function(newText) {
+            update(newText);
         },
         destroy: function() {
             _that.typedText.destroy();
